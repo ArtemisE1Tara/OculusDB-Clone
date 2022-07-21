@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        {meta}
+        <link rel="stylesheet" href="/style.css" >
+        <title>Important Info - OculusDB</title>
+        <meta property="og:title" content="Important Info - OculusDB">
+        <meta property="og:description" content="A important info is currently on OculusDB">
+        <meta name="google-site-verification" content="0UWk3BxSZQEsUvTS6W6NuN71Zcv9XDiBPUXGO_0llJM" />
+    </head>
+    <body>
+        <div class="content">
+            <div>
+                <h2>Important info</h2>
+                OculusDB is currently experiencing issues:
+                <br>
+                <br>
+                Due to a bug in Oculus authentication I'm making OculusDB unavailable for now to prevent piracy. I apologise for any inconvenience caused by this.
+                <br>
+                <br>
+                <h2>When will OculusDB be up again?</h2>
+                I reported the bug to oculus and told them that I'll open OculusDB either when they fix the issue or on July 7th 3pm GMT.
+            </div>
+        </div>
+        <script>
+            const params = new URLSearchParams(window.location.search)
+            if(params.get("access")) {
+                fetch("/api/v1/checkaccess", {
+                    method: "POST",
+                    body: params.get("access")
+                }).then(res => {
+                    res.text().then(res => {
+                        if(res == "true") {
+                            // set cookie. Available for 10 days
+                            SetCookie("access", params.get("access"), 10)
+                            location.href = "/?access=" + params.get("access")
+                        }
+                    })
+                })
+            }
+
+            function SetCookie(name, value, expiration) {
+                var d = new Date();
+                d.setTime(d.getTime() + (expiration * 24 * 60 * 60 * 1000));
+                var expires = "expires=" + d.toUTCString();
+                document.cookie = name + "=" + value + ";" + expires + ";path=/";
+            }
+        </script>
+    </body>
+</html>
